@@ -36,12 +36,9 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             path_to_file = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            ########################
-            # Why does it have to be like this?
             file.save(path_to_file)
             put_in_S3(path_to_file, filename)
             os.remove(path_to_file)
-            ########################
             return redirect(url_for('upload_file'))
     return render_template('home.html')
 
